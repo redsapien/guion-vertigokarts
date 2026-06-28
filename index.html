@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VertiGoKarts · Solo Guión Técnico</title>
+    <style>
+        /* ============================================================
+        1. CONFIGURACIÓN VISUAL Y VARIABLES DE MARCA
+        ============================================================ */
+        :root {
+            --color-primary: #FF4500;
+            --color-dark: #0A0A0A;
+            --color-dark-card: #141414;
+            --color-light: #FFFFFF;
+            --color-muted: #888888;
+            --color-success: #00FF66;
+            --font-main: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --font-mono: 'Courier New', Courier, monospace;
+            --transition-smooth: 0.25s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--color-dark);
+            color: var(--color-light);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* ============================================================
+        2. HEADER DE PRODUCCIÓN
+        ============================================================ */
+        header {
+            border-bottom: 2px solid var(--color-primary);
+            padding: 40px 0 25px 0;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        header h1 span {
+            color: var(--color-primary);
+        }
+
+        header p {
+            color: var(--color-muted);
+            font-size: 1.1rem;
+            margin-top: 8px;
+        }
+
+        /* ============================================================
+        3. CRONOGRAMA DE ESCENAS / TOMAS
+        ============================================================ */
+        .timeline {
+            display: grid;
+            gap: 25px;
+        }
+
+        .timeline-item {
+            background: var(--color-dark-card);
+            border: 1px solid #222;
+            border-radius: 10px;
+            padding: 25px;
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 20px;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-item {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding: 20px;
+            }
+        }
+
+        .timeline-item:hover {
+            border-color: var(--color-primary);
+            background: #181818;
+        }
+
+        /* Estado completado interactivo */
+        .timeline-item.checked {
+            border-color: var(--color-success);
+            opacity: 0.65;
+        }
+
+        .timeline-item.checked .time-badge {
+            background: var(--color-success);
+            box-shadow: 0 4px 10px rgba(0, 255, 102, 0.2);
+        }
+
+        .time-badge {
+            background: var(--color-primary);
+            color: white;
+            font-family: var(--font-mono);
+            font-weight: 900;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            height: 50px;
+            box-shadow: 0 4px 10px rgba(255, 69, 0, 0.3);
+            transition: var(--transition-smooth);
+        }
+
+        .item-content h3 {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .grid-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 650px) {
+            .grid-details {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+        }
+
+        .detail-block {
+            background: #0f0f0f;
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 3px solid #333;
+        }
+
+        .detail-block strong {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--color-muted);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+
+        .detail-block p {
+            font-size: 0.95rem;
+            color: #e0e0e0;
+            line-height: 1.5;
+        }
+
+        .detail-block.audio-block {
+            border-left-color: var(--color-success);
+            background: #0f1411;
+        }
+
+        .instruccion-check {
+            font-size: 0.8rem;
+            color: var(--color-muted);
+            text-align: right;
+            margin-top: 15px;
+            font-family: var(--font-mono);
+        }
+
+        footer {
+            text-align: center;
+            color: var(--color-muted);
+            font-size: 0.85rem;
+            margin-top: 60px;
+            font-family: var(--font-mono);
+            border-top: 1px solid #1a1a1a;
+            padding-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <header>
+        <h1>Guión <span>VertiGo</span></h1>
+        <p>Estructura Absoluta de Tomas y Audio (Meta Ads - 29 Segundos)</p>
+        <div class="instruccion-check">✓ Toca cualquier escena para marcarla como grabada en pista</div>
+    </header>
+
+    <!-- CRONOGRAMA DE ESCENAS -->
+    <main class="timeline">
+        
+        <!-- ESCENA 1 -->
+        <div class="timeline-item" onclick="toggleEscena(this)">
+            <div class="time-badge">00-06s</div>
+            <div class="item-content">
+                <h3>Escena 1: El Gancho Local (Confianza de Marca)</h3>
+                <div class="grid-details">
+                    <div class="detail-block">
+                        <strong>Dirección Visual (Toma)</strong>
+                        <p>Formato vertical nativo (9:16). Cristian aparece en plano medio/corto hablando directo a la cámara con el casco puesto y el visor levantado. Detrás se ve la pista iluminada y movimiento real de karts para dar contexto inmediato.</p>
+                    </div>
+                    <div class="detail-block audio-block">
+                        <strong>Audio & Voz en Off</strong>
+                        <p><strong>(Voz directa a cámara):</strong> "Manizales y Villamaría, ¿buscan un parche a otro nivel? VertiGo Karts es todo, ¡pillen pues!"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESCENA 2 -->
+        <div class="timeline-item" onclick="toggleEscena(this)">
+            <div class="time-badge">06-10s</div>
+            <div class="item-content">
+                <h3>Escena 2: Segmentación y Grupo (Conexión Emocional)</h3>
+                <div class="grid-details">
+                    <div class="detail-block">
+                        <strong>Dirección Visual (Toma)</strong>
+                        <p>Cortes ultra-rápidos (ritmo de videoclip). Dos personas con casco acomodándose y subiendo felices a sus karts. Plano cerrado de un choque de puños o palmas entre parceros/parejas justo antes de acelerar.</p>
+                    </div>
+                    <div class="detail-block audio-block">
+                        <strong>Audio & Voz en Off</strong>
+                        <p><strong>(Entra Voz en Off):</strong> "Familia, amigos o pareja, aquí la adrenalina se siente en serio."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESCENA 3 -->
+        <div class="timeline-item" onclick="toggleEscena(this)">
+            <div class="time-badge">10-14s</div>
+            <div class="item-content">
+                <h3>Escena 3: Efecto Sensorial ASMR (Retención Orgánica)</h3>
+                <div class="grid-details">
+                    <div class="detail-block">
+                        <strong>Dirección Visual (Toma)</strong>
+                        <p>Toma macro/primerísimo primer plano enfocado directamente en el bloque del motor o el escape. Se graba la vibración metálica cuando el piloto pisa el acelerador a fondo en ralentí.</p>
+                    </div>
+                    <div class="detail-block audio-block">
+                        <strong>Audio & Voz en Off</strong>
+                        <p><strong>(Audio Puro + Voz):</strong> Sonido nítido del rugido del motor (sin música de fondo por 2 segundos). <br><strong>Voz en off:</strong> "Escuchen esa máquina... potencia pura a un solo pedal."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESCENA 4 -->
+        <div class="timeline-item" onclick="toggleEscena(this)">
+            <div class="time-badge">14-20s</div>
+            <div class="item-content">
+                <h3>Escena 4: Adrenalina Inmersiva (Prueba de Velocidad)</h3>
+                <div class="grid-details">
+                    <div class="detail-block">
+                        <strong>Dirección Visual (Toma)</strong>
+                        <p>Uso de cámara de acción (GoPro) montada en el casco del piloto o en los laterales bajos del chasis del kart. Toma en primera persona ganando velocidad rápidamente en una subida técnica o devorando una curva cerrada.</p>
+                    </div>
+                    <div class="detail-block audio-block">
+                        <strong>Audio & Voz en Off</strong>
+                        <p><strong>(Voz en Off):</strong> "Siente la velocidad, la curva y el desafío de la pista más salvaje."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESCENA 5 -->
+        <div class="timeline-item" onclick="toggleEscena(this)">
+            <div class="time-badge">20-26s</div>
+            <div class="item-content">
+                <h3>Escena 5: Comunidad y Parche Real (Validación Social)</h3>
+                <div class="grid-details">
+                    <div class="detail-block">
+                        <strong>Dirección Visual (Toma)</strong>
+                        <p>Toma fluida realizada con un teléfono móvil que sigue la acción de forma natural. Se muestra un grupo diverso (hombres y mujeres juntos) compitiendo limpiamente en pista, riendo y disfrutando la experiencia.</p>
+                    </div>
+                    <div class="detail-block audio-block">
+                        <strong>Audio & Voz en Off</strong>
+                        <p><strong>(Voz en Off):</strong> "El parche perfecto te está esperando. ¿Te atreves a rodar?"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESCENA 6 -->
+        <div class="timeline-item" onclick="toggleEscena(this)">
+            <div class="time-badge">26-29s</div>
+            <div class="item-content">
+                <h3>Escena 6: Impacto de Cierre (Llamado a la Acción Directo)</h3>
+                <div class="grid-details">
+                    <div class="detail-block">
+                        <strong>Dirección Visual (Toma)</strong>
+                        <p>Un kart realiza un frenón brusco controlado frente a la cámara (derrape). En el milisegundo exacto del freno, el video corta a una pantalla limpia de color negro donde resalta el llamado a agendar.</p>
+                    </div>
+                    <div class="detail-block audio-block">
+                        <strong>Audio & Voz en Off</strong>
+                        <p><strong>(Efecto Final):</strong> Sonido seco de llantas chillando en el pavimento + <strong>Voz en off:</strong> "¡VertiGo! Aparta tu cupo ahora en el enlace."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>VertiGoKarts · Guión de Producción Limpio · Manizales, Caldas</p>
+    </footer>
+
+</div>
+
+<!-- ============================================================
+4. JAVASCRIPT: CONTROL DE PROGRESO DE GRABACIÓN
+============================================================ -->
+<script type="text/javascript">
+    function toggleEscena(elemento) {
+        elemento.classList.toggle('checked');
+    }
+</script>
+
+</body>
+</html>
